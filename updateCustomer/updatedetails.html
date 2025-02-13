@@ -1,0 +1,60 @@
+<!-- References updated.php -->
+<section>
+    
+    <h1>Update Customer Form</h1>
+    <p>Please change the fields you wish to update: </p>
+
+    <form action="updated.php" method="post">
+        <input type="hidden" name="ud_id" value="<?php echo $cust_id; ?>">
+        
+        <label for="ud_forename">Forename:</label>
+        <input type="text" maxlength="20" name="ud_forename" value="<?php if (isset($forename))echo $forename;?>"><br>
+        
+        <label for="ud_surname">Surname:</label>
+        <input type="text" maxlength="20" name="ud_surname" value="<?php if (isset($surname))echo $surname;?>"><br>
+        
+        <label for="ud_town">Town:</label>
+        <input type="text" name="ud_town" maxlength="20" value="<?php if (isset($town))echo $town;?>"><br>
+        
+        <label for="ud_eircode">EIR Code:</label>
+        <input type="text" name="ud_eircode" maxlength="8" value="<?php if (isset($eircode))echo $eircode;?>"><br>
+        
+        <label for="ud_password">Password:</label>
+        <input type="password" name="ud_password" maxlength="20" value=""><br>
+        
+        <label for="ud_phone">Phone:</label>
+        <input type="text" name="ud_phone" maxlength="11" value="<?php if (isset($phone))echo $phone;?>"><br>
+        
+        <label for="ud_email">E-Mail:</label>
+        <input type="text" name="ud_email" maxlength="50" value="<?php if (isset($email))echo $email;?>"><br>
+        
+        <label for="ud_cardnumber">Card Number:</label>
+        <input type="text" name="ud_cardnumber" maxlength="19" value="<?php if (isset($cardnumber))echo $cardnumber;?>"><br>
+        
+        <label for="ud_status">Status:</label>
+        <input type="text" name="ud_status" maxlength="15" value="<?php if (isset($status))echo $status;?>"><br>
+        
+        <label for="ud_county">County:</label>
+        <select name="ud_county" value="<?php if(isset($county)) echo $county; ?>" required>
+            <option value="Carlow">Carlow</option> <option value="Cavan">Cavan</option>
+            <option value="Clare">Clare</option><option value="Cork">Cork</option>
+            <option value="Donegal">Donegal</option><option value="Dublin">Dublin</option>
+            <option value="Galway">Galway</option><option value="Kerry">Kerry</option>
+            <option value="Kildare">Kildare</option><option value="Kilkenny">Kilkenny</option>
+            <option value="Laois">Laois</option><option value="Leitrim">Leitrim</option>
+            <option value="Limerick">Limerick</option><option value="Longford">Longford</option>
+            <option value="Louth">Louth</option><option value="Mayo">Mayo</option>
+            <option value="Meath">Meath</option><option value="Monaghan">Monaghan</option>
+            <option value="Offaly">Offaly</option><option value="Roscommon">Roscommon</option>
+            <option value="Sligo">Sligo</option><option value="Tipperary">Tipperary</option>
+            <option value="Waterford">Waterford</option><option value="Westmeath">Westmeath</option>
+            <option value="Wexford">Wexford</option><option value="Wicklow">Wicklow</option>
+        
+        
+        <input type="Submit" value="Update">
+        </form>
+    </section>
+
+</body>
+
+</html>

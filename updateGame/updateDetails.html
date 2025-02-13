@@ -1,0 +1,43 @@
+<!-- References updated.php -->
+<article>
+
+    <h1>Update Game Form</h1>
+    <p>Please change the fields you wish to update: </p>
+
+    <form action="updated.php" method="post">
+        <input type="hidden" name="ud_id" value="<?php echo $game_id; ?>">
+        
+        <label for="ud_title">Title:</label>
+        <input type="text" name="ud_title" maxlength="20" value="<?php if (isset($title))echo $title;?>" required><br>
+        
+        <label for="ud_developer">Developer:</label>
+        <input type="text" name="ud_developer" maxlength="20" value="<?php if (isset($developer))echo $developer;?>" required><br>
+        
+        <label for="ud_publisher">Publisher:</label>
+        <input type="text" name="ud_publisher" maxlength="20" value="<?php if (isset($publisher))echo $publisher;?>" required><br>
+        
+        <label for="ud_genre">Genre:</label>
+        <input type="text" name="ud_genre" maxlength="20" value="<?php if (isset($genre))echo $genre;?>"><br>
+        
+        <label for="ud_description">Description:</label>
+        <input type="text" name="ud_description" maxlength="50" value="<?php if (isset($description))echo $description;?>"><br>
+        
+        <label for="ud_buyprice">Buy Price:</label>
+        <input type="text" name="ud_buyprice" maxlength="7" value="<?php if (isset($buyprice))echo $buyprice;?>" required><br>
+        
+        <label for="ud_saleprice">SalePrice:</label>
+        <input type="text" name="ud_saleprice" maxlength="7" value="<?php if (isset($saleprice))echo $saleprice;?>" required><br>
+        
+        <label for="ud_quantity">Quantity:</label>
+        <input type="text" name="ud_quantity" maxlength="5" value="<?php if (isset($quantity))echo $quantity;?>" required><br>
+        
+        <label for="ud_status">Status:</label>
+        <input type="text" name="ud_status" maxlength="15" value="<?php if (isset($status))echo $status;?>" required><br>
+        
+        <input type="Submit" value="Update">
+        </form>
+</article>
+
+</body>
+
+</html>

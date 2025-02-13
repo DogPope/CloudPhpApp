@@ -1,0 +1,9 @@
+selectupdate: Display all the customers in a table first so you an get the id of the customer you want to update. Enter this in the textbox at the bottom of the page.
+
+updateform.php: Display the details of the "customer id" you entered in textboxs so they can be updated. Update the relevant details and click update.
+
+Updated.php: Updates the "customer" based on the new details entered in previous file (updateform.php).
+
+
+
+

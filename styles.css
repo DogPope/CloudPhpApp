@@ -1,0 +1,141 @@
+body{
+    height:100vh;
+    width:100%;
+    padding:15px;
+    margin:0;
+    background-color:rgb(255, 253, 226);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    overflow-x: hidden;
+    color:darkslategrey;
+}
+hr{
+    visibility: hidden;
+    padding:1.5em 0;
+}
+h1,h2,h3{
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+.nav > a {
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 200px;
+    z-index: 1;
+}
+.productimage{
+    height:108px;
+    width:192px;
+}
+button{
+    border-radius: 3px;
+    color: rgb(34, 34, 34);
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+}
+#cartButton{
+    background-color: rgb(244, 255, 213);
+}
+.dropdown:hover .dropcontent {
+    display: block;
+}
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+.dropcontent{
+    display: none;
+    position: absolute;
+    background-color: #dadada;
+    min-width: 200px;
+    z-index: 1;
+}
+header{
+    background-color:rgb(238, 255, 248);
+    display:flex;
+    flex-direction:row;
+    justify-content: space-between;
+    width:100%;
+}
+nav, nav li, nav a, footer a{
+    color:darkslategrey;
+    display:inline-block;
+    text-decoration:none;
+    list-style-type:none;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+nav ul{
+    padding-left: 1.1rem;
+}
+p a{
+    color:rgb(162, 0, 211);
+}
+p a:visited{
+    color:rgb(205, 42, 255);
+}
+p a:hover{
+    color:rgb(255, 119, 29);
+}
+input{
+    align-self: right;
+}
+label{
+    text-align: left;
+}
+a{
+    color:darkslategrey;
+}
+a:visited{
+    color:darkslategray;
+}
+a:hover{
+    color:rgb(255, 45, 209);
+}
+.social{
+    position:sticky;
+    top:1.5em;
+}
+article p, h1{
+    padding:0 1em;
+}
+.logo{
+    padding:0.5em 2em;
+}
+.contact{
+    padding-right:3em;
+    text-align:center;
+}
+.checkout{
+    visibility:hidden;
+}
+section{
+    box-sizing:content-box;
+    width:100%;
+    display:flex;
+    flex-direction:column;
+}
+.cartimage{
+    height:200px;
+    width:300px;
+}
+article{
+    padding: 1.5em 1.1em;
+    flex:4;
+}
+footer{
+    background-color:rgb(238, 255, 248);
+    min-height:6.5em;
+    position:relative;
+    bottom:0;
+    width:100%;
+}
+.links{
+    position:absolute;
+    bottom:3em;
+    right:0;
+}
+.copyright{
+    position:absolute;
+    padding-left:1.2em;
+    left:0;
+    bottom:2em;
+}
