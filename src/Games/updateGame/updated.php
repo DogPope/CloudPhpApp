@@ -1,6 +1,6 @@
 <?php
 try {
-    include("../header.html"); 
+    include("../../../public/html/header.html"); 
 $pdo = new PDO('mysql:host=localhost;dbname=shippingapp; charset=utf8', 'root', ''); 
 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 

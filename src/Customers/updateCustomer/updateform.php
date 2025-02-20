@@ -1,35 +1,34 @@
 <?php
-include '../header.html';
+include("../../../public/html/header.html");
 try { 
+  // Takes in 'cust_id' from view all update delete.php
 $pdo = new PDO('mysql:host=localhost;dbname=shippingapp; charset=utf8', 'root', '');
 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-$sql="SELECT count(*) FROM games WHERE game_id=:gid";
+$sql="SELECT count(*) FROM customers WHERE cust_id=:cid";
 
 $result = $pdo->prepare($sql);
-$result->bindValue(':gid', $_GET['game_id']);
+$result->bindValue(':cid', $_GET['cust_id']);
 $result->execute();
 if($result->fetchColumn() > 0) 
 {
-    $sql = 'SELECT * FROM games where game_id=:gid';
+    $sql = 'SELECT * FROM customers where cust_id = :cid';
     $result = $pdo->prepare($sql);
-    $result->bindValue(':gid', $_GET['game_id']);
+    $result->bindValue(':cid', $_GET['cust_id']);
     $result->execute();
 
     $row = $result->fetch();
-     $game_id = $row['game_id'];
-	 $title = $row['title'];
-   $developer = $row['developer'];
-   $publisher = $row['publisher'];
-   $genre = $row['genre'];
-   $description = $row['description'];
-   $buyprice = $row['buyprice'];
-   $saleprice = $row['saleprice'];
-   $quantity = $row['quantity'];
+     $cust_id = $row['cust_id'];
+	 $forename = $row['forename'];
+   $surname = $row['surname'];
+   $town = $row['town'];
+   $eircode = $row['eircode'];
+   $password = $row['password'];
+   $phone = $row['phone'];
+   $email = $row['email'];
+   $cardnumber = $row['cardnumber'];
    $status = $row['status'];
-	  
-  
-	  
+   $county = $row['county'];
    
 }
 

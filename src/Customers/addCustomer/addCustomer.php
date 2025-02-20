@@ -1,32 +1,18 @@
 <?php
-
-include ("../header.html");
-
+include '../../../public/html/header.html';
 $numOfAtSymbols = 0;
 $domain = 0;
-
     if (isset($_POST['submitdetails'])) {
-
         try {
-        
         $forename = $_POST['forename'];
-        
         $surname = $_POST['surname'];
-
         $town = $_POST['town'];
-        
         $eircode = $_POST['eircode'];
-
         $password = $_POST['password'];
-
         $phone = $_POST['phone'];
-
         $cardnumber = $_POST['cardnumber'];
-
         $email = $_POST['email'];
-
         $county = $_POST['county'];
-
         for($i =0; $i < strlen($email); $i++){
             if($email[$i] == '@');
                 $numOfAtSymbols++;
@@ -69,52 +55,29 @@ $domain = 0;
             echo 'alert("You have entered an invalid surname!")';
             echo '</script>';
         }
-
         else{
-
-            $pdo = new PDO('mysql:host=localhost;dbname=shippingapp; charset=utf8', 'root', '');
-            
+            $pdo = new PDO('mysql:host=localhost;dbname=shippingapp; charset=utf8', 'root', 'password');
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            
             $sql = "INSERT INTO customers (forename, surname, town, eircode, password, phone, email, cardnumber, county, status) VALUES (:forename, :surname, :town, :eircode, :password, :phone, :email, :cardnumber, :county, 'Registered')";  //CURDATE() - Method returns current time. Not useful here, but I'll comment it out for safekeeping!
-            
-            $stmt = $pdo->prepare($sql);
-            
+
+            $stmt = $pdo->prepare($sql);            
             $stmt->bindValue(':forename', $forename);
-            
             $stmt->bindValue(':surname', $surname);
-
             $stmt->bindValue(':town', $town);
-
             $stmt->bindValue(':eircode', $eircode);
-
             $stmt->bindValue(':password', $password);
-
             $stmt->bindValue(':phone', $phone);
-
             $stmt->bindValue(':email', $email);
-
             $stmt->bindValue(':cardnumber', $cardnumber);
-
             $stmt->bindValue(':county', $county);
-            
             $stmt->execute();
-
             header('location: addCustomer.php');
         }
-
     }
-
 catch (PDOException $e) {
-
 $title = 'An error has occurred';
-
 $output = 'Database error: ' . $e->getMessage() . ' in ' . $e->getFile() . ':' . $e->getLine();
-
 }
-
 }
-
-include 'addCustomer.html';
-
+include("addCustomer.html");
 ?>

@@ -1,5 +1,6 @@
 <?php
 session_start();
+include("../../public/html/header.html");
 
 if(!isset($_SESSION['isLoggedIn'])){
     echo "<script language='javascript'>";
@@ -33,10 +34,8 @@ if(!isset($_SESSION['isLoggedIn'])){
   }
 }
 
-include("../header.html");
-
 try {
-    $pdo = new PDO('mysql:host=localhost;dbname=shippingapp; charset=utf8', 'root', ''); 
+    $pdo = new PDO('mysql:host=localhost;dbname=shippingapp; charset=utf8', 'root', 'password'); 
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     // When user loads page, Cust ID is taken from session and used to bring up a table of Orders associated with that ID.

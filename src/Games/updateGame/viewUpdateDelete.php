@@ -1,8 +1,8 @@
 <?php
-include '../header.html';
+include("../../../public/html/header.html");
 
    try {
-$pdo = new PDO('mysql:host=localhost;dbname=shippingapp; charset=utf8', 'root', ''); 
+$pdo = new PDO('mysql:host=localhost;dbname=shippingapp; charset=utf8', 'root', 'password'); 
 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 $sql = 'SELECT game_id, title, developer, saleprice, quantity FROM Games';
