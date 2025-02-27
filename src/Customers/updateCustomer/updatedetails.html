@@ -7,11 +7,8 @@
     <form action="updated.php" method="post">
         <input type="hidden" name="ud_id" value="<?php echo $cust_id; ?>">
         
-        <label for="ud_forename">Forename:</label>
-        <input type="text" maxlength="20" name="ud_forename" value="<?php if (isset($forename))echo $forename;?>"><br>
-        
-        <label for="ud_surname">Surname:</label>
-        <input type="text" maxlength="20" name="ud_surname" value="<?php if (isset($surname))echo $surname;?>"><br>
+        <label for="ud_username">Username:</label>
+        <input type="text" maxlength="20" name="ud_username" value="<?php if (isset($username))echo $username;?>"><br>
         
         <label for="ud_town">Town:</label>
         <input type="text" name="ud_town" maxlength="20" value="<?php if (isset($town))echo $town;?>"><br>

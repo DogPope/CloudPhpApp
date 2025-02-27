@@ -1,8 +1,8 @@
--- MariaDB dump 10.19  Distrib 10.4.27-MariaDB, for Win64 (AMD64)
+-- MariaDB dump 10.19  Distrib 10.4.32-MariaDB, for Win64 (AMD64)
 --
 -- Host: localhost    Database: shippingapp
 -- ------------------------------------------------------
--- Server version	10.4.27-MariaDB
+-- Server version	10.4.32-MariaDB
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -23,19 +23,20 @@ DROP TABLE IF EXISTS `customers`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `customers` (
-  `cust_id` int(11) NOT NULL AUTO_INCREMENT,
-  `username` varchar(20) NOT NULL,
+  `cust_id` int(5) NOT NULL AUTO_INCREMENT,
+  `username` varchar(25) NOT NULL,
+  `town` varchar(20) NOT NULL,
   `eircode` varchar(8) NOT NULL,
   `password` varchar(20) NOT NULL,
   `phone` char(10) NOT NULL,
   `email` varchar(50) NOT NULL,
   `cardnumber` char(16) NOT NULL,
-  `status` varchar(15) NOT NULL DEFAULT 'Registered',
+  `status` char(1) NOT NULL DEFAULT 'R',
   `county` varchar(9) NOT NULL,
   PRIMARY KEY (`cust_id`),
   UNIQUE KEY `email` (`email`),
   KEY `county` (`county`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -44,7 +45,19 @@ CREATE TABLE `customers` (
 
 LOCK TABLES `customers` WRITE;
 /*!40000 ALTER TABLE `customers` DISABLE KEYS */;
-INSERT INTO `customers` VALUES (1,'Jameson','Daniel','Tralee','V93 GG84','password','0863445123','daniel.jameson@students.ittralee.ie','4444444444444444','Registered','Kerry'),(2,'Murphy','Patrick','Limerick','C65 VB54','hunter2','0835968214','murphy@gmail.com','1234123412341234','Registered','Limerick'),(3,'O Shea','Jennifer','Cork','P98 TH54','password1','0898234511','jennifer@gmail.com','1111111111111111','Registered','Cork'),(4,'O Connell','Patrick','Dundalk','L34 TH65','randomString','0871212703','OCONNELL@gmail.com','4321432143214321','Registered','Louth'),(5,'McCarthy','Orla','Roscommon','R34 TG84','nopassforyou','0857120341','yancy@gmail.com','4871903265918452','Registered','Carlow'),(6,'Ryan','Thomas','Wexford','V93 AC60','realpassword','0833812639','thomas@gmail.com','9365837501810381','Registered','Leitrim'),(7,'Placeholder','Placeholder','Wexford','D12 RG43','Placeholder','0833812639','Placeholder','9365837501810381','Registered','Leitrim'),(8,'Jack','Jones','Here','There','wadwd345','0882344012','email','7890789078907890','Registered','Leitrim'),(9,'Jesse','James','Tralee','B54 GT33','plPL56%^','0868901314','gmail@msn.com','1234123412341234','Registered','louth'),(10,'pat','plassey','carlow','Q89 RR31','opihn&*56','0878901314','real@gmail.com','6789678967896789','Registered','Kildare'),(11,'jesse','Jackson','Tralee','P87 GM78','oiregorag','0868901314','gmail@gmail.com','4567456745674567','Registered','Monaghan');
+INSERT INTO `customers` VALUES 
+(1,'DanielUser','Tralee','V93 GG84','1119J7!\"£','0861234123','eyyylamao@students.ittralee.ie','1111111111111111','D','Carlow'),
+(2,'P.Rick','Limerick','C65 VB54','hunter2','0835968214','murphy@gmail.com','1234123412341234','R','Limerick'),
+(3,'Jenosh','Cork','P98 TH54','password1','0898234511','jennifer@gmail.com','1111111111111111','R','Cork'),
+(4,'Patsy','Dundalk','L34 TH65','randomString','0871212703','OCONNELL@gmail.com','4321432143214321','R','Louth'),
+(5,'Bridie','Roscommon','R34 TG84','nopassforyou','0857120341','yancy@gmail.com','4871903265918452','R','Carlow'),
+(6,'Ryomas','Wexford','V93 AC60','realpassword','0833812639','thomas@gmail.com','9365837501810381','R','Leitrim'),
+(7,'Placeholder','Wexford','D12 RG43','Placeholder','0833812639','Placeholder','9365837501810381','R','Leitrim'),
+(8,'WeNeedToCookJesse','Here','There','wadwd345','0882344012','email','7890789078907890','R','Leitrim'),
+(9,'Jessa','Tralee','B54 GT33','plPL56%^','0868901314','gmail@msn.com','1234123412341234','R','Louth'),
+(10,'Pat Lash','carlow','Q89 RR31','opihn&*56','0878901314','real@gmail.com','6789678967896789','R','Kildare'),
+(11,'Jekson','Tralee','P87 GM78','oiregorag','0868901314','gmail@gmail.com','4567456745674567','R','Monaghan'),
+(14,'kealy','Bantry','P19 MM54','password','0868901314','email@email.com','4321432143214321','R','Carlow');
 /*!40000 ALTER TABLE `customers` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -79,7 +92,7 @@ CREATE TABLE `games` (
 
 LOCK TABLES `games` WRITE;
 /*!40000 ALTER TABLE `games` DISABLE KEYS */;
-INSERT INTO `games` VALUES (1,'title','developer','publisher','this','this is a descriptio',39.50,89.12,5,'Registered'),(2,'doom','idsoftware','bethesda','mayhem','a very good game',35.50,99.50,8,'Registered'),(3,'tit','dev','pub','gen','this shouldn\'t be re',23.40,35.30,7,'Registered'),(4,'Kids Game','Sega','Sega','Platformer','Cinderella rescues Italian plumber!',30.00,60.00,50,'Registered'),(5,'Zelda','Nintendo','Nintendo','Platformer','Little Green man rescues princess!',30.00,60.00,50,'Registered'),(6,'Find Ruler','Rockstar','Rockstar','Puzzle','While under a porch, seek the red graphing tool!',30.00,60.00,50,'Registered');
+INSERT INTO `games` VALUES (1,'title','developer','publisher','this','this is a descriptio',39.50,89.12,5,'Registered'),(2,'doom','idsoftware','bethesda','mayhem','a very good game',35.50,99.50,8,'Registered'),(3,'tit','dev','pub','gen','this shouldnt be',23.40,35.30,7,'Registered'),(4,'Kids Game','Sega','Sega','Platformer','Cinderella rescues Italian plumber!',30.00,60.00,50,'Registered'),(5,'Zelda','Nintendo','Nintendo','Platformer','Little Green man rescues princess!',30.00,60.00,50,'Registered'),(6,'Find Ruler','Rockstar','Rockstar','Puzzle','While under a porch, seek the red graphing tool!',30.00,60.00,50,'Registered');
 /*!40000 ALTER TABLE `games` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -148,4 +161,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-04-18 16:53:40
+-- Dump completed on 2025-02-27 13:12:39
