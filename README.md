@@ -19,12 +19,14 @@ Although, as I said, the pages don't connect right and cannot be used for their 
 NOTE: There was no version control for a large part of this project. The starting point here is 2 years after it was submitted as a project. It's fine... I suppose.
 
 Suggestions
-Research best practices for migrating app to cloud.
-Look for articles and Research papaers searching for the "Strangulation design pattern".
-API behind gateway. Make use of AWS VPC, etc.
+* Research best practices for migrating app to cloud.
+* Look for articles and Research papaers searching for the "Strangulation design pattern".
+* API behind gateway. Make use of AWS VPC, etc. Activity on AWS.
+* Maybe deploy with Elastic Beanstalk. Activity on AWS for this.
+* RDS
 
 # To-Do List
 - [x] Test app to ensure all functionality is as expected. (Maybe I didn't test ALL functionality, but good enough for now, at least.)
-- [ ] Add an About us page to cover information, and as an entrypoint.
+- [ ] Add an About us page to cover information, and to serve as an entrypoint.
 - [x] Refactor folder system to make more sense.
 - [ ] Refactor some variables such as password etc. to be made secret.

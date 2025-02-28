@@ -11,7 +11,7 @@ try{
     $result = $pdo->prepare($sql);
     $result->bindValue(':cid', $_POST['ud_id']);
 
-// All validation here takes the format: Validate, then assign value, then linebreak.
+    // All validation here takes the format: Validate, then assign value, then linebreak.
     if($_POST['ud_username'] == ""){
         echo "You must enter a valid username to continue!<br>";
         echo "Click <a href='viewUpdateDelete.php'>Here</a> To return!";

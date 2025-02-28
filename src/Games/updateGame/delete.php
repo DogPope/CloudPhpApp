@@ -8,12 +8,12 @@ try {
     $result->bindValue(':gid', $_GET['game_id']);
     $result->execute();
 
-    if($result->fetchColumn() > 0) 
-    {
+    if($result->fetchColumn() > 0){
         $sql = 'SELECT * FROM games where game_id = :gid';
         $result = $pdo->prepare($sql);
         $result->bindValue(':gid', $_GET['game_id']); 
         $result->execute();
+        
         while ($row = $result->fetch()) { 
             echo $row['title'] . ' ' . $row['developer'] . ' Are you sure you want to delete ??' . '<form action="deleteGame.php" method="post">
                 <input type="hidden" name="game_id" value="'.$row['game_id'].'"> 
@@ -21,11 +21,11 @@ try {
                 </form>';
                 //NOTE - Dont keep associative array inside double quote while printing otherwise it would not return any value.     
         }
-    }
-    else{
+    }else{
         print "No rows matched the query.";
     }
+
 }catch(PDOException $e){ 
-$output = 'Unable to connect to the database server: ' . $e->getMessage() . ' in ' . $e->getFile() . ':' . $e->getLine(); 
+    $output = 'Unable to connect to the database server: ' . $e->getMessage() . ' in ' . $e->getFile() . ':' . $e->getLine(); 
 }
 ?>

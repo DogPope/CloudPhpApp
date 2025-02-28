@@ -11,7 +11,6 @@ if(!isset($_SESSION['isLoggedIn'])){
     if(isset($_SESSION['cart'])){
         unset($_SESSION['cart']);
     }
-
     if(isset($_SESSION['order_items'])){
         $session_array_id = array_column($_SESSION['order_items'], 'game_id');
 
@@ -23,19 +22,17 @@ if(!isset($_SESSION['isLoggedIn'])){
               );
               $_SESSION['order_items'][] = $session_array;
         }
-  }
-  else{
+    }else{
         $session_array = array(
               'game_id' => $_GET['game_id'],
               'title' => $_POST['title'],
               'saleprice' => $_POST['saleprice'],
         );
         $_SESSION['order_items'][] = $session_array;
-  }
+    }
 }
-
-try {
-    $pdo = new PDO('mysql:host=localhost;dbname=shippingapp; charset=utf8', 'root', 'password'); 
+try{
+    $pdo = new PDO('mysql:host=localhost;dbname=shippingapp; charset=utf8', 'root', ''); 
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     // When user loads page, Cust ID is taken from session and used to bring up a table of Orders associated with that ID.
@@ -130,9 +127,8 @@ try {
         $stmtReduceCost->execute();
     }
 
-}
-catch (PDOException $e) {
-$output = 'Unable to connect to the database server: ' . $e->getMessage() . ' in ' . $e->getFile() . ':' . $e->getLine();
+}catch(PDOException $e){
+    $output = 'Unable to connect to the database server: ' . $e->getMessage() . ' in ' . $e->getFile() . ':' . $e->getLine();
 }
 
 echo "</section>";

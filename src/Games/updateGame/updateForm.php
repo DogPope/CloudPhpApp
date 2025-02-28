@@ -1,5 +1,5 @@
 <?php
-include("/CloudPhpApp/public/html/header.html");
+include("../../../public/html/header.html");
 try{
     $pdo = new PDO('mysql:host=localhost;dbname=shippingapp; charset=utf8', 'root', '');
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -18,10 +18,7 @@ try{
         $game_id = $row['game_id'];
         $title = $row['title'];
         $developer = $row['developer'];
-        $publisher = $row['publisher'];
         $genre = $row['genre'];
-        $description = $row['description'];
-        $buyprice = $row['buyprice'];
         $saleprice = $row['saleprice'];
         $quantity = $row['quantity'];
         $status = $row['status'];
