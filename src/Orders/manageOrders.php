@@ -70,6 +70,7 @@ try{
                 </th>
             </tr>';
         }
+        echo "</table>";
     echo "</section><br><br>";
 
     if(isset($_GET['details'])){
@@ -103,6 +104,7 @@ try{
                 </tr>';
             echo "<br>";
         }
+        echo "</table>";
     }
     if(isset($_GET['cancel'])){
         $cancel = "UPDATE Orders SET Status='Cancelled' WHERE Order_Id=:order_id";
@@ -126,13 +128,10 @@ try{
         $stmtReduceCost->bindValue(':order_id', $_GET['order_id']);
         $stmtReduceCost->execute();
     }
-
 }catch(PDOException $e){
     $output = 'Unable to connect to the database server: ' . $e->getMessage() . ' in ' . $e->getFile() . ':' . $e->getLine();
 }
-
 include("../../public/html/footer.html");
 echo "</section>";
 echo "</body></html>";
-
 ?>
