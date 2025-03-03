@@ -157,6 +157,7 @@ try{
 }
 
 // Close the original Section and body tags.
+include("../../public/html/footer.html");
 echo "</section>";
 echo "</body></html>";
 

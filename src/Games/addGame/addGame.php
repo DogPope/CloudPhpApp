@@ -31,4 +31,5 @@ if (isset($_POST['submitdetails'])) {
     }
 }
 include("addGame.html");
+include('../../../public/html/footer.html');
 ?>

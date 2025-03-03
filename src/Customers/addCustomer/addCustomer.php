@@ -1,5 +1,5 @@
 <?php
-include '../../../public/html/header.html';
+include('../../../public/html/header.html');
 $numOfAtSymbols = 0;
 $domain = 0;
     if (isset($_POST['submitdetails'])) {
@@ -19,10 +19,11 @@ $domain = 0;
                     $domain++;
             }
             for($i = 0; $i < strlen($cardnumber); $i++){
-                if(!is_numeric($cardnumber[$i]))
+                if(!is_numeric($cardnumber[$i])){
                     echo '<script language="javascript">';
                     echo 'alert("You have entered an invalid credit card number!")';
                     echo '</script>';
+                }
             }
             if($numOfAtSymbols < 1){
                 echo 'alert("The email address you have entered is wrong!")';
@@ -39,7 +40,7 @@ $domain = 0;
                 echo 'alert("You have entered an invalid password!")';
                 echo '</script>';
             }
-            if(empty($town)){
+            if(strlen($town) < 3){
                 echo '<script language="javascript">';
                 echo 'alert("You must enter what approximate town you live in!")';
                 echo '</script>';
@@ -73,4 +74,5 @@ $domain = 0;
         }
     }
 include("addCustomer.html");
+include('../../../public/html/footer.html');
 ?>

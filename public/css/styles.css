@@ -1,12 +1,21 @@
+html, body{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+}
 body{
-    height:100vh;
-    width:100%;
-    padding:15px;
-    margin:0;
-    background-color:rgb(255, 253, 226);
+    padding: 15px;
+    background-color: rgb(255, 253, 226);
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     overflow-x: hidden;
-    color:darkslategrey;
+    color: darkslategrey;
+}
+footer{
+    background-color:rgb(238, 255, 248);
+    min-height: 6.5em;
+    width: 100%;
+    margin-top: auto;
 }
 hr{
     visibility: hidden;
@@ -15,7 +24,7 @@ hr{
 h1,h2,h3{
     font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
-.nav > a {
+.nav > a{
     position: absolute;
     background-color: #f9f9f9;
     min-width: 200px;
@@ -35,10 +44,10 @@ button{
 #cartButton{
     background-color: rgb(244, 255, 213);
 }
-.dropdown:hover .dropcontent {
+.dropdown:hover .dropcontent{
     display: block;
 }
-.dropdown {
+.dropdown{
     position: relative;
     display: inline-block;
 }
@@ -120,13 +129,6 @@ section{
 article{
     padding: 1.5em 1.1em;
     flex:4;
-}
-footer{
-    background-color:rgb(238, 255, 248);
-    min-height:6.5em;
-    position:relative;
-    bottom:0;
-    width:100%;
 }
 .links{
     position:absolute;

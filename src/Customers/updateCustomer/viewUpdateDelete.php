@@ -16,8 +16,9 @@ try{
         echo "<td><a href=\"updateform.php?cust_id=".$row['cust_id']."\">Update</a></td>";
         echo "</tr>";
     }
-echo '</table>';
+    echo '</table>';
 }catch(PDOException $e){
     $output = 'Unable to connect to the database server: ' . $e->getMessage() . ' in ' . $e->getFile() . ':' . $e->getLine(); 
 }
+include("../../../public/html/footer.html");
 ?>

@@ -64,4 +64,5 @@ if (isset($_POST['submitbutton'])){
         }
     }
 }
+include("../../public/html/footer.html");
 ?>

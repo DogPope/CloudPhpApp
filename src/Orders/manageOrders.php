@@ -131,6 +131,7 @@ try{
     $output = 'Unable to connect to the database server: ' . $e->getMessage() . ' in ' . $e->getFile() . ':' . $e->getLine();
 }
 
+include("../../public/html/footer.html");
 echo "</section>";
 echo "</body></html>";
 
