@@ -54,7 +54,7 @@ $domain = 0;
                 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                 $sql = "INSERT INTO customers (username, town, eircode, password, phone, email, cardnumber, county, status) VALUES (:username, :town, :eircode, :password, :phone, :email, :cardnumber, :county, 'R')";  //CURDATE() - Method returns current time. Not useful here, but I'll comment it out for safekeeping!
 
-                $stmt = $pdo->prepare($sql);            
+                $stmt = $pdo->prepare($sql);
                 $stmt->bindValue(':username', $username);
                 $stmt->bindValue(':town', $town);
                 $stmt->bindValue(':eircode', $eircode);
