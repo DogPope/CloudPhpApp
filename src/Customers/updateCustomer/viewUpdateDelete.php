@@ -18,7 +18,7 @@ try{
     }
     echo '</table>';
 }catch(PDOException $e){
-    $output = 'Unable to connect to the database server: ' . $e->getMessage() . ' in ' . $e->getFile() . ':' . $e->getLine(); 
+    $output = 'Unable to connect to the database server: ' . $e->getMessage() . ' in ' . $e->getFile() . ':' . $e->getLine();
 }
 include("../../../public/html/footer.html");
 ?>

@@ -5,21 +5,29 @@
 
     <form action="addCustomer.php" method="post">
 
-        Username: <input type="text" name="username" value="" maxlength="20" required><br>
+        <label for="username">Username:</label>
+        <input type="text" name="username" id="username" value="" maxlength="20" required><br>
     
-        Town: <input type="text" name="town" value="" maxlength="20" required><br>
+        <label for="town">Town:</label>
+        <input type="text" name="town" id="town" value="" maxlength="20" required><br>
     
-        EIR Code: <input type="text" name="eircode" value="" maxlength="8" required><br>
+        <label for="eircode">EIR Code: </label>
+        <input type="text" name="eircode" id="eircode" value="" maxlength="8" required><br>
         
-        Password: <input type="password" name="password" value="" maxlength="20" required><br>
+        <label for="password">Password: </label>
+        <input type="password" name="password" id="password" value="" maxlength="20" required><br>
     
-        Phone: <input type="text" name="phone" value="" maxlength="10" required><br>
+        <label for="phone">Phone: </label>
+        <input type="text" name="phone" id="phone" value="" maxlength="10" required><br>
     
-        E-Mail: <input type="text" name="email" value="" maxlength="50" required><br>
+        <label for="email">E-Mail: </label>
+        <input type="text" name="email" id="email" value="" maxlength="50" required><br>
     
-        Credit Card Number: <input type="text" name='cardnumber' value="" maxlength="19" required><br>
+        <label for="cardnumber">Credit Card Number: </label>
+        <input type="text" name="cardnumber" id="cardnumber" value="" maxlength="19" required><br>
     
-        County: <select name="county" required>
+        <label for="county">County:</label> 
+        <select name="county" id="county" required>
             <option value="Carlow">Carlow</option> <option value="Cavan">Cavan</option>
             <option value="Clare">Clare</option><option value="Cork">Cork</option>
             <option value="Donegal">Donegal</option><option value="Dublin">Dublin</option>
@@ -32,7 +40,8 @@
             <option value="Offaly">Offaly</option><option value="Roscommon">Roscommon</option>
             <option value="Sligo">Sligo</option><option value="Tipperary">Tipperary</option>
             <option value="Waterford">Waterford</option><option value="Westmeath">Westmeath</option>
-            <option value="Wexford">Wexford</option><option value="Wicklow">Wicklow</option></select><br>
+            <option value="Wexford">Wexford</option><option value="Wicklow">Wicklow</option>
+        </select><br>
         
         <input type="submit" name="submitdetails" value="Submit">
         

@@ -26,8 +26,8 @@ Suggestions
 * RDS
 
 # To-Do List
-- [ ] ES MUY IMPORTANTE: - This will not work on Chrome. The form for "Add Customer" will not display the "Submit" button, for some ungodly reason. Test in College.
+- [x] ES MUY IMPORTANTE: - This will not work on Chrome. The form for "Add Customer" will not display the "Submit" button, for some ungodly reason. Test in College.
 - [x] Test app to ensure all functionality is as expected. (Maybe I didn't test ALL functionality, but good enough for now, at least.)
-- [ ] Add an About us page to cover information, and to serve as an entrypoint.
+- [x] Add an About us page to cover information, and to serve as an entrypoint.
 - [x] Refactor folder system to make more sense.
-- [ ] Refactor some variables such as password etc. to be made secret.
+- [ ] Refactor some variables such as password etc. to be made secret. < Note: This should be done on cloud, not through the app itself.

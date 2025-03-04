@@ -21,7 +21,7 @@ if (isset($_POST['submitbutton'])){
         return;
     }
         try{
-            $pdo = new PDO('mysql:host=localhost;dbname=shippingapp; charset=utf8', 'root', ''); 
+            $pdo = new PDO('mysql:host=localhost;dbname=shippingapp; charset=utf8', 'root', '');
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
             $sql = "SELECT cust_id, username, eircode, email, password FROM customers WHERE email=:email AND password=:password";
@@ -59,8 +59,8 @@ if (isset($_POST['submitbutton'])){
                 echo '</script>';
                 return;
             }
-        }catch(PDOException $e){ 
-            $output = 'Unable to connect to the database server: ' . $e->getMessage() . ' in ' . $e->getFile() . ':' . $e->getLine(); 
+        }catch(PDOException $e){
+            $output = 'Unable to connect to the database server: ' . $e->getMessage() . ' in ' . $e->getFile() . ':' . $e->getLine();
         }
     }
 }

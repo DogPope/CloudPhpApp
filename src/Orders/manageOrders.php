@@ -3,10 +3,9 @@ session_start();
 include("../../public/html/header.html");
 
 if(!isset($_SESSION['isLoggedIn'])){
-    echo "<script language='javascript'>";
-    echo "alert('You need to be logged in to place an order!')";
-    echo "</script>";
-    echo "Click <a href='../login/login.php'>Here</a> to Log in!";
+    $_SESSION['login_message'] = 'You need to be logged in to place an order!';
+    header("Location: ../Login/login.php");
+    exit();
 
     if(isset($_SESSION['cart'])){
         unset($_SESSION['cart']);

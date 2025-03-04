@@ -1,7 +1,7 @@
 <?php
 include("../../../public/html/header.html");
 try{
-    $pdo = new PDO('mysql:host=localhost;dbname=shippingapp; charset=utf8', 'root', ''); 
+    $pdo = new PDO('mysql:host=localhost;dbname=shippingapp; charset=utf8', 'root', '');
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $sql = 'SELECT * FROM customers';
     $result = $pdo->query($sql);
@@ -10,14 +10,14 @@ try{
     echo "<table border=1>";
     echo "<tr><th>User Id</th><th>User Name:</th><th>Delete</th><th>Update:</th></tr>";
 
-    while ($row = $result->fetch()) {
+    while($row = $result->fetch()){
         echo '<tr><td>' . $row['cust_id'] . '</td><td>'. $row['username'] . '</td>';
         echo "<td><a href=\"delete.php?cust_id=".$row['cust_id']."\">Remove</a></td>";
         echo "<td><a href=\"updateform.php?cust_id=".$row['cust_id']."\">Update</a></td>";
         echo "</tr>";
     }
     echo '</table>';
-}catch(PDOException $e){ 
-    $output = 'Unable to connect to the database server: ' . $e->getMessage() . ' in ' . $e->getFile() . ':' . $e->getLine(); 
+}catch(PDOException $e){
+    $output = 'Unable to connect to the database server: ' . $e->getMessage() . ' in ' . $e->getFile() . ':' . $e->getLine();
 }
 ?>

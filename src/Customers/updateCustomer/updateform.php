@@ -33,7 +33,7 @@ try{
         print "No rows matched the query. try again click<a href='viewUpdateDelete.php'> here</a> to go back";
     }
 }catch(PDOException $e){
-    $output = 'Unable to connect to the database server: ' . $e->getMessage() . ' in ' . $e->getFile() . ':' . $e->getLine(); 
+    $output = 'Unable to connect to the database server: ' . $e->getMessage() . ' in ' . $e->getFile() . ':' . $e->getLine();
 }
 include 'updateDetails.html';
 ?>
