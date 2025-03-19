@@ -21,8 +21,10 @@ NOTE: There was no version control for a large part of this project. The startin
 Suggestions
 * Research best practices for migrating app to cloud.
 * Look for articles and Research papaers searching for the "Strangulation design pattern".
+^ The Strangler Pattern incrementally replaces the legacy system by building a new system alongside the old one, eventually strangling the old system
+[Here is a StackOverflow Question on the Subject](https://stackoverflow.com/questions/1118804/application-strangler-pattern-experiences-thoughts)
 * API behind gateway. Make use of AWS VPC, etc. Activity on AWS.
-* Maybe deploy with Elastic Beanstalk. Activity on AWS for this.
+* Maybe deploy with Elastic Beanstalk. Activity on AWS for this. It's in Academy Cloud Foundations.
 * RDS
 
 # To-Do List
