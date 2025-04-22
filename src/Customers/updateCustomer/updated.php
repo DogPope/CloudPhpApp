@@ -4,15 +4,13 @@ require '../../../bootstrap.php';
 use App\Core\Database;
 try{
     include("../../../public/html/header.html");
-    $pdo = new PDO($dsn, $myJSON->username, $myJSON->password);
-    echo "Connection was Successful";
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $db = Database::getInstance();
     $cust_id = $_POST['ud_id'];
     $sql =  'update customers set username = :cusername,
                 town = :ctown, eircode = :ceircode, password = :cpassword,
                 phone = :cphone, email = :cemail, cardnumber = :ccardnumber,
                 status = :cstatus, county = :ccounty WHERE cust_id = :cid';
-    $result = $pdo->prepare($sql);
+    $result = $db->prepare($sql);
     $result->bindValue(':cid', $_POST['ud_id']);
 
     if($_POST['ud_username'] == ""){
@@ -96,5 +94,6 @@ try{
     }
 }catch(PDOException $e){
     $output = 'Unable to process query sorry : ' . $e->getMessage() . ' in ' . $e->getFile() . ':' . $e->getLine(); 
+    echo $output;
 }
 ?>

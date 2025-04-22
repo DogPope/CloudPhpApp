@@ -5,11 +5,9 @@ use App\Core\Database;
 
 include("../../../public/html/header.html");
 try{ 
-     $pdo = new PDO($dsn, $myJSON->username, $myJSON->password);
-     echo "Connection was Successful";
-     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+     $db = Database::getInstance();
      $sql = 'DELETE FROM games WHERE game_id = :gid';
-     $result = $pdo->prepare($sql);
+     $result = $db->query($sql);
      $result->bindValue(':gid', $_POST['game_id']);
      $result->execute();
      echo "You just deleted Game no: " . $_POST['game_id'] ." \n click<a href='viewUpdateDelete.php'> here</a> to go back ";

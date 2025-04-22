@@ -1,28 +1,7 @@
 <?php
 require '../../../vendor/autoload.php';
-
-use Aws\SecretsManager\SecretsManagerClient; 
-use Aws\Exception\AwsException;
-
-$client = new SecretsManagerClient([
-    'version' => 'latest',
-    'region' => 'eu-west-1'
-]);
-
-$result = $client->getSecretValue([
-    'SecretId' => $_ENV["SECRET_NAME"],
-]);
-
-$myJSON = json_decode($result['SecretString']);
-// Does this work? I think this might actually work?
-define('DB_SERVER', $_ENV["DB_ENDPOINT"]);
-define('DB_USERNAME', $myJSON->username);
-define('DB_PASSWORD', $myJSON->password);
-define('DB_DATABASE', $myJSON->dbname); // FIXED THIS LINE
-$dsn = "mysql:host=" . $myJSON->host .
-       ";port=" . $myJSON->port .
-       ";dbname=" . $myJSON->dbname .
-       ";charset=utf8"; // optional but recommended
+require '../../../bootstrap.php';
+use App\Core\Database;
 session_start();
 include "../../public/html/header.html";
 include("login.html");
@@ -45,19 +24,17 @@ if (isset($_POST['submitbutton'])){
         return;
     }
         try{
-            $pdo = new PDO($dsn, $myJSON->username, $myJSON->password);
-            echo "Connection was Successful";
-            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $db = Database::getInstance();
 
             $sql = "SELECT cust_id, username, eircode, email, password FROM customers WHERE email=:email AND password=:password";
-            $result = $pdo->prepare($sql);
+            $result = $db->prepare($sql);
             $result->bindValue(':email', $email);
             $result->bindValue(':password', $password);
             $result->execute();
 
             if($result->fetchColumn() > 0){
                 $sql = "SELECT cust_id, username, eircode, email, password FROM customers WHERE email=:email AND password=:password";
-                $result = $pdo->prepare($sql);
+                $result = $db->prepare($sql);
                 $result->bindValue(':email', $email);
                 $result->bindValue(':password', $password);
                 $result->execute();
@@ -86,6 +63,7 @@ if (isset($_POST['submitbutton'])){
             }
         }catch(PDOException $e){
             $output = 'Unable to connect to the database server: ' . $e->getMessage() . ' in ' . $e->getFile() . ':' . $e->getLine();
+            echo $output;
         }
     }
 }

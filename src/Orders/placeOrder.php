@@ -1,29 +1,8 @@
 <?php
 session_start();
 require '../../../vendor/autoload.php';
-
-use Aws\SecretsManager\SecretsManagerClient; 
-use Aws\Exception\AwsException;
-
-$client = new SecretsManagerClient([
-    'version' => 'latest',
-    'region' => 'eu-west-1'
-]);
-
-$result = $client->getSecretValue([
-    'SecretId' => $_ENV["SECRET_NAME"],
-]);
-
-$myJSON = json_decode($result['SecretString']);
-// Does this work? I think this might actually work?
-define('DB_SERVER', $_ENV["DB_ENDPOINT"]);
-define('DB_USERNAME', $myJSON->username);
-define('DB_PASSWORD', $myJSON->password);
-define('DB_DATABASE', $myJSON->dbname); // FIXED THIS LINE
-$dsn = "mysql:host=" . $myJSON->host .
-       ";port=" . $myJSON->port .
-       ";dbname=" . $myJSON->dbname .
-       ";charset=utf8"; // optional but recommended
+require '../../../bootstrap.php';
+use App\Core\Database;
 
 $total = 0;
 
@@ -73,7 +52,7 @@ if(isset($_POST['addToCart'])){
         $_SESSION['cart'] = array();
     }
     
-    // Check if item already in cart
+    // MAY HAVE TO COME BACK HERE TO CHANGE THE $item['game_id']. BEAR THAT IN MIND.
     $item_exists = false;
     foreach($_SESSION['cart'] as $key => $item){
         if($item['game_id'] == $game_id){
@@ -119,15 +98,13 @@ if(isset($_SESSION['order_success'])){
 include("../../public/html/header.html");
 
 try{
-    $pdo = new PDO($dsn, $myJSON->username, $myJSON->password);
-    echo "Connection was Successful";
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $db = Database::getInstance();
 
-    $sql = 'SELECT game_id, title, developer, saleprice, quantity FROM Games WHERE quantity > 0 AND Status="R"';
-    $result = $pdo->query($sql);
+    $sql = 'SELECT game_id, title, developer, saleprice, quantity FROM games WHERE quantity > 0 AND Status="R"';
+    $result = $db->query($sql);
 
     $getMaxId = 'SELECT MAX(order_id) + 1 FROM Orders';
-    $max = $pdo->query($getMaxId);
+    $max = $db->query($getMaxId);
 
     $maxOrderNumber = $max->fetch();
     echo "Next order ID: ".$maxOrderNumber['MAX(order_id) + 1']."<br>";
@@ -207,24 +184,24 @@ try{
     if(!empty($_SESSION['cart'])){
         // This block of code handles database interactions including INSERT and some housekeeping for Games Table.
         if(isset($_GET['action']) == "placeorder"){
-            $insert = 'INSERT INTO Orders (Order_Date, cost, Cust_Id, Status) VALUES (Curdate(), :total, :cust_id, "P")';
-            $stmt = $pdo->prepare($insert);
+            $insert = 'INSERT INTO orders (order_date, cost, cust_id, Status) VALUES (curdate(), :total, :cust_id, "P")';
+            $stmt = $db->prepare($insert);
             $stmt->bindValue(':total', $total);
             $stmt->bindValue(':cust_id', $_SESSION['cust_id']);
             $stmt->execute();
 
-            $itemInsert = 'INSERT INTO Order_Items (Order_Id, Game_Id) VALUES (:Order_Id, :Game_Id)';
-            $nextstmt = $pdo->prepare($itemInsert);
-            $nextstmt->bindValue(':Order_Id', $maxOrderNumber['MAX(order_id) + 1']);
+            $itemInsert = 'INSERT INTO order_items (order_id, game_id) VALUES (:order_id, :game_id)';
+            $nextstmt = $db->prepare($itemInsert);
+            $nextstmt->bindValue(':order_Id', $maxOrderNumber['MAX(order_id) + 1']);
             foreach($_SESSION['cart'] as $key => $value){
                 // Execute Insert into OrderItems for each Game ID in the array.
-                $nextstmt->bindValue(':Game_Id', $value['game_id']);
+                $nextstmt->bindValue(':game_Id', $value['game_id']);
                     
                 $nextstmt->execute();
 
-                $reduceQty = 'UPDATE Games SET Quantity = Quantity-:amount WHERE Game_Id=:Game_Id';
+                $reduceQty = 'UPDATE games SET quantity = quantity-:amount WHERE game_Id=:game_Id';
                 $reduceStmt = $pdo->prepare($reduceQty);
-                $reduceStmt->bindValue(':Game_Id', $value['game_id']);
+                $reduceStmt->bindValue(':game_Id', $value['game_id']);
                 $reduceStmt->bindValue(':amount', $value['amount']);
 
                 $reduceStmt->execute();
@@ -235,6 +212,7 @@ try{
     }
 }catch(PDOException $e){
     $output = 'Unable to connect to the database server: ' . $e->getMessage() . ' in ' . $e->getFile() . ':' . $e->getLine();
+    echo $output;
 }
 
 include("../../public/html/footer.html");

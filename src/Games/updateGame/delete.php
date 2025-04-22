@@ -5,18 +5,16 @@ use App\Core\Database;
 
 try { 
     include("../../../public/html/header.html");
-    $pdo = new PDO($dsn, $myJSON->username, $myJSON->password);
-    echo "Connection was Successful";
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $db = Database::getInstance();
     $sql = 'SELECT count(*) FROM games where game_id = :gid';
-    $result = $pdo->prepare($sql);
+    $result = $db->prepare($sql);
     $result->bindValue(':gid', $_GET['game_id']);
     $result->execute();
 
     if($result->fetchColumn() > 0){
         $sql = 'SELECT * FROM games where game_id = :gid';
-        $result = $pdo->prepare($sql);
-        $result->bindValue(':gid', $_GET['game_id']); 
+        $result = $db->prepare($sql);
+        $result->bindValue(':gid', $_GET['id']); 
         $result->execute();
         
         while ($row = $result->fetch()) { 
@@ -32,5 +30,6 @@ try {
 
 }catch(PDOException $e){ 
     $output = 'Unable to connect to the database server: ' . $e->getMessage() . ' in ' . $e->getFile() . ':' . $e->getLine(); 
+    echo $output;
 }
 ?>

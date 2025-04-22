@@ -2,18 +2,17 @@
 require '../../../vendor/autoload.php';
 require '../../../bootstrap.php';
 use App\Core\Database;
-try{ 
+try{
     include("../../../public/html/header.html");
-    $pdo = new PDO($dsn, $myJSON->username, $myJSON->password);
+    $db = Database::getInstance();
     echo "Connection was Successful";
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $sql = 'SELECT count(*) FROM customers where cust_id = :cid';
-    $result = $pdo->prepare($sql);
+    $result = $db->prepare($sql);
     $result->bindValue(':cid', $_GET['cust_id']);
     $result->execute();
     if($result->fetchColumn() > 0){
         $sql = 'SELECT * FROM customers where cust_id = :cid';
-        $result = $pdo->prepare($sql);
+        $result = $db->prepare($sql);
         $result->bindValue(':cid', $_GET['cust_id']);
         $result->execute();
         
@@ -28,5 +27,6 @@ try{
     }
 }catch(PDOException $e){
     $output = 'Unable to connect to the database server: ' . $e->getMessage() . ' in ' . $e->getFile() . ':' . $e->getLine(); 
+    echo $output;
 }
 ?>

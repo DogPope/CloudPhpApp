@@ -4,21 +4,11 @@ require '../../../bootstrap.php';
 use App\Core\Database;
 try{
     include("../../../public/html/header.html"); 
-    $pdo = new PDO($dsn, $myJSON->username, $myJSON->password);
-    echo "Connection was Successful"; 
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $db = Database::getInstance();
     $sql =  'update games set title = :gtitle, developer = :gdeveloper, genre = :ggenre,
                 saleprice = :gsaleprice, quantity = :gquantity, status = :gstatus WHERE game_id = :gid';
-    $result = $pdo->prepare($sql);
+    $result = $db->query($sql);
     $result->bindValue(':gid', $_POST['ud_id']);
-
-    /*
-    * Debug code block. Testing whether the SQL works or not.
-    When all validation is removed, it still doesn't work.
-    It's not the SQL either, as evidenced by the script below.
-    update games set title = 'NotTitle', developer = 'Mr.Clean', genre = 'Mayhem', saleprice = 12.5, quantity = 6, status = 'R' WHERE game_id = 1;
-    Note: This query DOES work.
-    */
 
     // This is being triggered erroneously. Must Find cause. Title Validation triggered.
     if(strlen($_POST['ud_title']) < 1 || strlen($_POST['ud_title']) > 20){
@@ -61,17 +51,15 @@ In a past life, and so on and so forth.
         return;
     }
 
-    if($_POST['ud_status'] == "R" || $_POST['ud_status'] == "D"){
+    if($_POST['ud_status'] == "r" || $_POST['ud_status'] == "d"){
         $result->bindValue(':gstatus', $_POST['ud_status']);
     }else{
         echo 'You need to enter "Registered" or "Deregistered" as a status to continue!';
         echo "Click <a href='viewUpdateDelete.php'>Here </a> To go back!";
         return;
     }
-
     $result->execute();
-//For most databases, PDOStatement::rowCount() does not return the number of rows affected by a SELECT statement.
-     
+
     $count = $result->rowCount();
     if ($count > 0){
         echo "You just updated Game no: " . $_POST['ud_id'] ."  click<a href='viewUpdateDelete.php'> here</a> to go back ";
@@ -80,5 +68,6 @@ In a past life, and so on and so forth.
     }
 }catch(PDOException $e){
     $output = 'Unable to process query sorry : ' . $e->getMessage() . ' in ' . $e->getFile() . ':' . $e->getLine();
+    echo $output;
 }
 ?>

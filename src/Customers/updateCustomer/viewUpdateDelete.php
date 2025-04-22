@@ -4,11 +4,9 @@ require '../../../bootstrap.php';
 use App\Core\Database;
 include("../../../public/html/header.html");
 try{
-    $pdo = new PDO($dsn, $myJSON->username, $myJSON->password);
-    echo "Connection was Successful";
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $db = Database::getInstance();
     $sql = 'SELECT * FROM customers';
-    $result = $pdo->query($sql);
+    $result = $db->query($sql);
 
     echo "<br /><b>A Quick View</b><br><br>";
     echo "<table border=1 style='border-collapse:collapse;'>";
@@ -23,6 +21,7 @@ try{
     echo '</table>';
 }catch(PDOException $e){
     $output = 'Unable to connect to the database server: ' . $e->getMessage() . ' in ' . $e->getFile() . ':' . $e->getLine();
+    echo $output;
 }
 include("../../../public/html/footer.html");
 ?>
