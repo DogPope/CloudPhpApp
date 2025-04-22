@@ -1,4 +1,28 @@
 <?php
+require '../../../vendor/autoload.php';
+
+use Aws\SecretsManager\SecretsManagerClient; 
+use Aws\Exception\AwsException;
+
+$client = new SecretsManagerClient([
+    'version' => 'latest',
+    'region' => 'eu-west-1'
+]);
+
+$result = $client->getSecretValue([
+    'SecretId' => $_ENV["SECRET_NAME"],
+]);
+
+$myJSON = json_decode($result['SecretString']);
+// Does this work? I think this might actually work?
+define('DB_SERVER', $_ENV["DB_ENDPOINT"]);
+define('DB_USERNAME', $myJSON->username);
+define('DB_PASSWORD', $myJSON->password);
+define('DB_DATABASE', $myJSON->dbname); // FIXED THIS LINE
+$dsn = "mysql:host=" . $myJSON->host .
+       ";port=" . $myJSON->port .
+       ";dbname=" . $myJSON->dbname .
+       ";charset=utf8"; // optional but recommended
 session_start();
 include "../../public/html/header.html";
 include("login.html");
@@ -21,7 +45,8 @@ if (isset($_POST['submitbutton'])){
         return;
     }
         try{
-            $pdo = new PDO('mysql:host=localhost;dbname=shippingapp; charset=utf8', 'root', '');
+            $pdo = new PDO($dsn, $myJSON->username, $myJSON->password);
+            echo "Connection was Successful";
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
             $sql = "SELECT cust_id, username, eircode, email, password FROM customers WHERE email=:email AND password=:password";

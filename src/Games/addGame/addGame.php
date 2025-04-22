@@ -1,4 +1,25 @@
 <?php
+require '../../../vendor/autoload.php';
+
+use Aws\SecretsManager\SecretsManagerClient; 
+use Aws\Exception\AwsException;
+
+$client = new SecretsManagerClient([
+    'version' => 'latest',
+    'region' => 'eu-west-1'
+]);
+
+$result = $client->getSecretValue([
+    'SecretId' => $_ENV["SECRET_NAME"],
+]);
+
+$myJSON = json_decode($result['SecretString']);
+define('DB_SERVER', $_ENV["DB_ENDPOINT"]);
+define('DB_USERNAME', $myJSON->username);
+define('DB_PASSWORD', $myJSON->password);
+define('DB_DATABASE', $myJSON->dbname);
+$dsn="mysql:host=".$myJSON->host.";port=".$myJSON->port.";dbname=".$myJSON->dbname.";charset=utf8";
+var_dump($dsn, $myJSON->username, $myJSON->password);
 include '../../../public/html/header.html';
 if (isset($_POST['submitdetails'])) {
     try {
@@ -10,7 +31,8 @@ if (isset($_POST['submitdetails'])) {
         if ($title == '' or $developer == ''){
             echo("You did not complete the insert form correctly <br> ");
         }else{
-            $pdo = new PDO('mysql:host=localhost;dbname=shippingapp; charset=utf8', 'root', '');
+            $pdo = new PDO($dsn, $myJSON->username, $myJSON->password);
+            echo "Connection was Successful";
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $sql = "INSERT INTO Games (title, developer, genre, saleprice, quantity, status) 
             VALUES (:title, :developer, :genre, :saleprice, :quantity,'R')";
@@ -26,8 +48,8 @@ if (isset($_POST['submitdetails'])) {
         }
     }
     catch(PDOException $e){
-        $title = 'An error has occurred';
-        $output = 'Database error: ' . $e->getMessage() . ' in ' . $e->getFile() . ':' . $e->getLine();
+        error_log("Connection failed: " . $e->getMessage());
+        die("Database connection failed. Please try again later.");
     }
 }
 include("addGame.html");

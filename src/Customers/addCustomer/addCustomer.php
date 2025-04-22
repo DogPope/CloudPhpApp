@@ -1,4 +1,21 @@
 <?php
+require '../../../vendor/autoload.php';
+use Aws\SecretsManager\SecretsManagerClient; 
+use Aws\Exception\AwsException;
+$client = new SecretsManagerClient([
+    'version' => 'latest',
+    'region' => 'eu-west-1'
+]);
+$result = $client->getSecretValue([
+    'SecretId' => $_ENV["SECRET_NAME"],
+]);
+$myJSON = json_decode($result['SecretString']);
+define('DB_SERVER', $_ENV["DB_ENDPOINT"]);
+define('DB_USERNAME', $myJSON->username);
+define('DB_PASSWORD', $myJSON->password);
+define('DB_DATABASE', $myJSON->dbname);
+$dsn="mysql:host=".$myJSON->host.";port=".$myJSON->port.";dbname=".$myJSON->dbname.";charset=utf8";
+var_dump($dsn, $myJSON->username, $myJSON->password);
 include('../../../public/html/header.html');
 $numOfAtSymbols = 0;
 $domain = 0;
@@ -33,43 +50,44 @@ if (isset($_POST['submitdetails'])) {
             header("Refresh:0");
             exit();
         }
-        if(!preg_match($password, "/^(?=.[a-z])(?=.[A-Z])(?=.[0-9])(?=.[!@#$%^&*])(?=.{8,})/")){
+        if(!preg_match("/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*]).{8,}$/", $password)){
             echo '<script language="javascript">';
             echo    'alert("You have entered an invalid password! Please enter a password with at least 8 characters, 1 uppercase letter, 1 lowercase letter, 1 number and 1 special character!")';
             echo '</script>';
             header("Refresh:0");
             exit();
         }
-        if(!preg_match($email, "/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$/")){
+        if(!preg_match("/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$/", $email)){
             echo '<script language="javascript">';
             echo    'alert("You have entered an invalid Email Address! Please enter a valid email address!")';
             echo '</script>';
             header("Refresh:0");
             exit();
         }
-        if(!preg_match($cardnumber, "/^[0-9]{16}$/")){
+        if(!preg_match("/^[0-9]{16}$/", $cardnumber)){
             echo '<script language="javascript">';
             echo    'alert("You have entered an invalid Card Number! Please enter a valid 16 digit card number!")';
             echo '</script>';
             header("Refresh:0");
             exit();
         }
-        if(!preg_match($phone, "/^[0-9]{10}$/")){
+        if(!preg_match("/^[0-9]{10}$/", $phone)){
             echo '<script language="javascript">';
             echo    'alert("You have entered an invalid Phone Number! Please enter a valid 10 digit phone number!")';
             echo '</script>';
             header("Refresh:0");
             exit();
         }
-        // Yes, I understand this is not validated correctly, I don't give a flying fuck, to be honest. This is much simpler.
-        if(!preg_match($eircode, "/^[A-Z]{3} [0-9]{4}$/")){
+        // NOTE: This only checks for three letters, four numbers. E.g 'WER 2345'
+        if(!preg_match("/^[A-Z]{3} [0-9]{4}$/", $eircode)){
             echo '<script language="javascript">';
             echo    'alert("You have entered an invalid Eircode! Please enter a valid Eircode!")';
             echo '</script>';
             header("Refresh:0");
             exit();
         }
-        $pdo = new PDO('mysql:host=localhost;dbname=shippingapp; charset=utf8', 'root', '');
+        $pdo = new PDO($dsn, $myJSON->username, $myJSON->password);
+        echo "Connection was Successful";
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $sql = "INSERT INTO customers (username, town, eircode, password, phone, email, cardnumber, county, status) VALUES (:username, :town, :eircode, :password, :phone, :email, :cardnumber, :county, 'R')";  //CURDATE() - Method returns current time. Not useful here, but I'll comment it out for safekeeping!
 
@@ -86,8 +104,9 @@ if (isset($_POST['submitdetails'])) {
         header('location: addCustomer.php');
     }
     catch (PDOException $e) {
-        $title = 'An error has occurred';
-        $output = 'Database error: ' . $e->getMessage() . ' in ' . $e->getFile() . ':' . $e->getLine();
+        error_log("Connection failed: " . $e->getMessage());
+        echo "Connection failed: " . $e->getMessage();
+        die("Database connection failed. Please try again later.");
     }
 }
 include("addCustomer.html");

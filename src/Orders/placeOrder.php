@@ -1,5 +1,29 @@
 <?php
 session_start();
+require '../../../vendor/autoload.php';
+
+use Aws\SecretsManager\SecretsManagerClient; 
+use Aws\Exception\AwsException;
+
+$client = new SecretsManagerClient([
+    'version' => 'latest',
+    'region' => 'eu-west-1'
+]);
+
+$result = $client->getSecretValue([
+    'SecretId' => $_ENV["SECRET_NAME"],
+]);
+
+$myJSON = json_decode($result['SecretString']);
+// Does this work? I think this might actually work?
+define('DB_SERVER', $_ENV["DB_ENDPOINT"]);
+define('DB_USERNAME', $myJSON->username);
+define('DB_PASSWORD', $myJSON->password);
+define('DB_DATABASE', $myJSON->dbname); // FIXED THIS LINE
+$dsn = "mysql:host=" . $myJSON->host .
+       ";port=" . $myJSON->port .
+       ";dbname=" . $myJSON->dbname .
+       ";charset=utf8"; // optional but recommended
 
 $total = 0;
 
@@ -95,7 +119,8 @@ if(isset($_SESSION['order_success'])){
 include("../../public/html/header.html");
 
 try{
-    $pdo = new PDO('mysql:host=localhost;dbname=shippingapp; charset=utf8', 'root', ''); 
+    $pdo = new PDO($dsn, $myJSON->username, $myJSON->password);
+    echo "Connection was Successful";
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     $sql = 'SELECT game_id, title, developer, saleprice, quantity FROM Games WHERE quantity > 0 AND Status="R"';
@@ -127,7 +152,7 @@ try{
                     <input type="hidden" name="saleprice" value='.number_format($row['saleprice'], 2).'>
                     <input type="hidden" name="quantity" value='.number_format($row['quantity']).'>
                     <input type="number" name="amount" value="1">
-                    <img class="productimage" src="/CloudPhpApp/public/images/img1.jpg">
+                    <img class="productimage" src="/public/images/img1.jpg">
                     <input type="submit" id="cartButton" name="addToCart" value="Add To Cart">
                 </form>
             </td>';

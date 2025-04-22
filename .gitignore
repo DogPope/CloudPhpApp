@@ -1,4 +1,6 @@
-.vs
-run.sh
-mysql_commands.md
-secrets
+*.log
+vendor/
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
