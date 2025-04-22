@@ -1,3 +1,8 @@
+# Es Muy Importante!
+Version 15 was the working one. I'll keep that for safekeeping. Make a new Env for this one maybe.
+Also, the following Es Muy Importante note:
+## Error From Elastic Beanstalk
+Instance deployment: You included a 'vendor' folder in your source bundle. The deployment ignored 'composer.json' and didn't install Composer dependencies.
 # PHP Server Side Project T00158237
 This project was submitted by Daniel Jameson for Server Side Scripting Module in college. It features a PHP and HTML project that deals with database and entity management.
 Unfortunately, it looks like this is an older version of the project, and doesn't quite run correctly. A few pages don't connect right, and cannot test the database connection.
