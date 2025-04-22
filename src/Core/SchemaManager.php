@@ -67,7 +67,7 @@ class SchemaManager{
                 `saleprice` decimal(4,2) NOT NULL,
                 `quantity` int(11) DEFAULT NULL,
                 `status` char(1) NOT NULL DEFAULT 'R',
-                PRIMARY KEY (`id`),
+                PRIMARY KEY (`game_id`),
                 CONSTRAINT `CONSTRAINT_1` CHECK (`quantity` > 0),
                 CONSTRAINT `CONSTRAINT_2` CHECK (`saleprice` >= 0)
             )";
