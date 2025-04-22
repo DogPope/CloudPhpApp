@@ -1,18 +1,14 @@
 <?php
 require '../../../vendor/autoload.php';
-
 use Aws\SecretsManager\SecretsManagerClient; 
 use Aws\Exception\AwsException;
-
 $client = new SecretsManagerClient([
     'version' => 'latest',
     'region' => 'eu-west-1'
 ]);
-
 $result = $client->getSecretValue([
     'SecretId' => $_ENV["SECRET_NAME"],
 ]);
-
 $myJSON = json_decode($result['SecretString']);
 define('DB_SERVER', $_ENV["DB_ENDPOINT"]);
 define('DB_USERNAME', $myJSON->username);
@@ -49,6 +45,7 @@ if (isset($_POST['submitdetails'])) {
     }
     catch(PDOException $e){
         error_log("Connection failed: " . $e->getMessage());
+        echo "Connection failed: " . $e->getMessage();
         die("Database connection failed. Please try again later.");
     }
 }
