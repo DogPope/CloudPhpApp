@@ -1,21 +1,8 @@
 <?php
 require '../../../vendor/autoload.php';
-use Aws\SecretsManager\SecretsManagerClient; 
-use Aws\Exception\AwsException;
-$client = new SecretsManagerClient([
-    'version' => 'latest',
-    'region' => 'eu-west-1'
-]);
-$result = $client->getSecretValue([
-    'SecretId' => $_ENV["SECRET_NAME"],
-]);
-$myJSON = json_decode($result['SecretString']);
-define('DB_SERVER', $_ENV["DB_ENDPOINT"]);
-define('DB_USERNAME', $myJSON->username);
-define('DB_PASSWORD', $myJSON->password);
-define('DB_DATABASE', $myJSON->dbname);
-$dsn="mysql:host=".$myJSON->host.";port=".$myJSON->port.";dbname=".$myJSON->dbname.";charset=utf8";
-var_dump($dsn, $myJSON->username, $myJSON->password);
+
+use App\Core\Database;
+
 include('../../../public/html/header.html');
 $numOfAtSymbols = 0;
 $domain = 0;
@@ -86,21 +73,24 @@ if (isset($_POST['submitdetails'])) {
             header("Refresh:0");
             exit();
         }
-        $pdo = new PDO($dsn, $myJSON->username, $myJSON->password);
-        echo "Connection was Successful";
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $sql = "INSERT INTO customers (username, town, eircode, password, phone, email, cardnumber, county, status) VALUES (:username, :town, :eircode, :password, :phone, :email, :cardnumber, :county, 'R')";  //CURDATE() - Method returns current time. Not useful here, but I'll comment it out for safekeeping!
-
-        $stmt = $pdo->prepare($sql);
-        $stmt->bindValue(':username', $username);
-        $stmt->bindValue(':town', $town);
-        $stmt->bindValue(':eircode', $eircode);
-        $stmt->bindValue(':password', $password);
-        $stmt->bindValue(':phone', $phone);
-        $stmt->bindValue(':email', $email);
-        $stmt->bindValue(':cardnumber', $cardnumber);
-        $stmt->bindValue(':county', $county);
-        $stmt->execute();
+        $db = Database::getInstance();
+            
+            $custId = $db->insert('customers', [
+                'username' => $username,
+                'town' => $town,
+                'eircode' => $eircode,
+                'password' => $password,
+                'phone' => $phone,
+                'cardnumber' => $cardnumber,
+                'email' => $email,
+                'county' => $county
+            ]);
+            
+            if ($custId) {
+                echo "Customer added successfully with the following Username: $username";
+            } else {
+                echo "Error adding Customer. Please try again.";
+            }
         header('location: addCustomer.php');
     }
     catch (PDOException $e) {
