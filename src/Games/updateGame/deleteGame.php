@@ -1,28 +1,8 @@
 <?php
 require '../../../vendor/autoload.php';
+require '../../../bootstrap.php';
+use App\Core\Database;
 
-use Aws\SecretsManager\SecretsManagerClient; 
-use Aws\Exception\AwsException;
-
-$client = new SecretsManagerClient([
-    'version' => 'latest',
-    'region' => 'eu-west-1'
-]);
-
-$result = $client->getSecretValue([
-    'SecretId' => $_ENV["SECRET_NAME"],
-]);
-
-$myJSON = json_decode($result['SecretString']);
-// Does this work? I think this might actually work?
-define('DB_SERVER', $_ENV["DB_ENDPOINT"]);
-define('DB_USERNAME', $myJSON->username);
-define('DB_PASSWORD', $myJSON->password);
-define('DB_DATABASE', $myJSON->dbname); // FIXED THIS LINE
-$dsn = "mysql:host=" . $myJSON->host .
-       ";port=" . $myJSON->port .
-       ";dbname=" . $myJSON->dbname .
-       ";charset=utf8"; // optional but recommended
 include("../../../public/html/header.html");
 try{ 
      $pdo = new PDO($dsn, $myJSON->username, $myJSON->password);

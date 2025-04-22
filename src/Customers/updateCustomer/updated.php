@@ -1,28 +1,7 @@
 <?php
 require '../../../vendor/autoload.php';
-
-use Aws\SecretsManager\SecretsManagerClient; 
-use Aws\Exception\AwsException;
-
-$client = new SecretsManagerClient([
-    'version' => 'latest',
-    'region' => 'eu-west-1'
-]);
-
-$result = $client->getSecretValue([
-    'SecretId' => $_ENV["SECRET_NAME"],
-]);
-
-$myJSON = json_decode($result['SecretString']);
-// Does this work? I think this might actually work?
-define('DB_SERVER', $_ENV["DB_ENDPOINT"]);
-define('DB_USERNAME', $myJSON->username);
-define('DB_PASSWORD', $myJSON->password);
-define('DB_DATABASE', $myJSON->dbname); // FIXED THIS LINE
-$dsn = "mysql:host=" . $myJSON->host .
-       ";port=" . $myJSON->port .
-       ";dbname=" . $myJSON->dbname .
-       ";charset=utf8"; // optional but recommended
+require '../../../bootstrap.php';
+use App\Core\Database;
 try{
     include("../../../public/html/header.html");
     $pdo = new PDO($dsn, $myJSON->username, $myJSON->password);
@@ -36,7 +15,6 @@ try{
     $result = $pdo->prepare($sql);
     $result->bindValue(':cid', $_POST['ud_id']);
 
-    // All validation here takes the format: Validate, then assign value, then linebreak.
     if($_POST['ud_username'] == ""){
         echo "You must enter a valid username to continue!<br>";
         echo "Click <a href='viewUpdateDelete.php'>Here</a> To return!";
@@ -64,35 +42,6 @@ try{
         echo "Click <a href='viewUpdateDelete.php'>Here</a> To return!";
         return;
     }
-
-// Checks whether a password has two lower case letters, upper case letters and symbols for verification.
-// This entire piece of code doesn't work for some reason.
-/*$specialChars = "@%!#$%^&*()?/>.<,:\|}]{[_~`=-+";
-$upperCase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-$lowerCase = "abcdefghijklmnopqrstuvwxyz";
-$specialCounter = 0;
-$upperCaseCount = 0;
-$lowerCaseCount = 0;
-    for($index = 0; $index < strlen($specialChars); $index++){
-        if(str_contains($password, $specialChars[$index]))
-            $specialCounter++;
-    }
-
-    for($index = 0; $index < strlen($upperCase); $index++){
-        if(str_contains($password, $upperCase[$index]))
-            $upperCaseCount++;
-    }
-
-    for($index = 0; $index < strlen($lowerCase); $index++){
-        if(str_contains($password, $lowerCase[$index]))
-            $lowerCaseCount++;
-    }
-
-    if($upperCaseCount <= 2 || $lowerCaseCount <= 2){
-        echo "We require a password with at least 2 of each lower case letter, upper case letter and symbols. We take your security very seriously you know!";
-        echo "Click <a href='viewUpdateDelete.php'>Here</a> To return!";
-        return;
-    }*/
     $result->bindValue(':cpassword', $_POST['ud_password']);
 
     $phone = $_POST['ud_phone'];

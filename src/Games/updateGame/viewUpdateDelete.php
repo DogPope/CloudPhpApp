@@ -1,28 +1,7 @@
 <?php
 require '../../../vendor/autoload.php';
-
-use Aws\SecretsManager\SecretsManagerClient; 
-use Aws\Exception\AwsException;
-
-$client = new SecretsManagerClient([
-    'version' => 'latest',
-    'region' => 'eu-west-1'
-]);
-
-$result = $client->getSecretValue([
-    'SecretId' => $_ENV["SECRET_NAME"],
-]);
-
-$myJSON = json_decode($result['SecretString']);
-// Does this work? I think this might actually work?
-define('DB_SERVER', $_ENV["DB_ENDPOINT"]);
-define('DB_USERNAME', $myJSON->username);
-define('DB_PASSWORD', $myJSON->password);
-define('DB_DATABASE', $myJSON->dbname); // FIXED THIS LINE
-$dsn = "mysql:host=" . $myJSON->host .
-       ";port=" . $myJSON->port .
-       ";dbname=" . $myJSON->dbname .
-       ";charset=utf8"; // optional but recommended
+require '../../../bootstrap.php';
+use App\Core\Database;
 include("../../../public/html/header.html");
 // This file is the Starting point from update game in the dropdown menu.
 // If the form won't display, it's probably a difference in password between the two MySQL versions on laptop and desktop.
