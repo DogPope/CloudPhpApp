@@ -1,6 +1,6 @@
 <?php
-require '../../../vendor/autoload.php';
-require '../../../bootstrap.php';
+require '../../vendor/autoload.php';
+require '../../bootstrap.php';
 use App\Core\Database;
 session_start();
 include "../../public/html/header.html";

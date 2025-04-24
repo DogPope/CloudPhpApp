@@ -5,7 +5,6 @@ use App\Core\Database;
 try{
     include("../../../public/html/header.html");
     $db = Database::getInstance();
-    $cust_id = $_POST['ud_id'];
     $sql =  'update customers set username = :cusername,
                 town = :ctown, eircode = :ceircode, password = :cpassword,
                 phone = :cphone, email = :cemail, cardnumber = :ccardnumber,
@@ -83,14 +82,12 @@ try{
     $result->bindValue(':ccounty', $_POST['ud_county']);
 
     $result->execute();
-    //For most databases, PDOStatement::rowCount() does not return the number of rows affected by a SELECT statement.
         
     $count = $result->rowCount();
     if ($count > 0){
-    echo "You just updated customer no: " . $_POST['ud_id'] ."  click<a href='viewUpdateDelete.php'> here</a> to go back ";
-    }
-    else{
-    echo "nothing updated <a href='viewUpdateDelete.php'> here</a> to go back";
+    echo "You just updated Customer no: " . $_POST['ud_id'] ."  click<a href='viewUpdateDelete.php'> here</a> to go back ";
+    }else{
+    echo "Nothing has been updated. Click <a href='viewUpdateDelete.php'> here</a> to go back";
     }
 }catch(PDOException $e){
     $output = 'Unable to process query sorry : ' . $e->getMessage() . ' in ' . $e->getFile() . ':' . $e->getLine(); 

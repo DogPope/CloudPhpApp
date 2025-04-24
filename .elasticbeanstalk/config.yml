@@ -1,14 +1,14 @@
 branch-defaults:
   default:
-    environment: PHP-application-modular
+    environment: Application-main
   main:
-    environment: PHP-application-modular
+    environment: Application-main
 environment-defaults:
-  PHP-application-modular:
+  Application-main:
     branch: null
     repository: null
 global:
-  application_name: PHP-application
+  application_name: Application
   default_ec2_keyname: php
   default_platform: PHP 8.4 running on 64bit Amazon Linux 2023
   default_region: eu-west-1

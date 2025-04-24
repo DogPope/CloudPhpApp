@@ -5,18 +5,18 @@ use App\Core\Database;
 include("../../../public/html/header.html");
 try{
     $db = Database::getInstance();
-    $sql="SELECT count(*) FROM games WHERE game_id=:gid";
-    $result = $db->query($sql);
-    $result->bindValue(':gid', $_GET['game_id']);
-    $result->execute();
-
-    if($result->fetchColumn() > 0){
-        $sql = 'SELECT * FROM games where game_id=:gid';
-        $result = $db->query($sql);
-        $result->bindValue(':gid', $_GET['game_id']);
-        $result->execute();
-
+    $game_id = filter_input(INPUT_GET, 'game_id', FILTER_VALIDATE_INT);
+    if (!$game_id) {
+        throw new Exception("Invalid Game ID provided in the URL.");
+    }
+    $sql = "SELECT count(*) FROM games WHERE game_id = :gid";
+    $result = $db->query($sql, [':gid' => $game_id]);
+    
+    if ($result->fetchColumn() > 0) {
+        $sql = 'SELECT * FROM games WHERE game_id = :gid';
+        $result = $db->query($sql, [':gid' => $game_id]);
         $row = $result->fetch();
+        
         $game_id = $row['game_id'];
         $title = $row['title'];
         $developer = $row['developer'];

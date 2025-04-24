@@ -6,7 +6,7 @@ include 'header.html';
 try{ 
     $db = Database::getInstance();
     $sql = 'SELECT * FROM customers';
-
+    echo "Does this file actually do anything?";
     $result = $db->query($sql); 
     echo "<br /><b>A Quick View</b><br><br>";
     echo "<table border=1>";

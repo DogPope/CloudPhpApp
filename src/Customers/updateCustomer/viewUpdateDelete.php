@@ -12,7 +12,7 @@ try{
     echo "<table border=1 style='border-collapse:collapse;'>";
     echo "<tr><th>Customer Id</th><th>Username</th><th>Delete</th><th>Update</th></tr>";
 
-    while($row = $result->fetch()){
+    while($row = $result->fetch()){ // Note: Remove points to delete.php
         echo '<tr><td>' . $row['cust_id'] . '</td><td>'. $row['username'] . '</td>';
         echo "<td><a href=\"delete.php?cust_id=".$row['cust_id']."\">Remove</a></td>";
         echo "<td><a href=\"updateform.php?cust_id=".$row['cust_id']."\">Update</a></td>";

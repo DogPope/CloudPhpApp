@@ -3,6 +3,12 @@ include('header.html');
 
 echo '<h1>About Us</h1>';
 
+echo '<h2>Warning: </h2>';
+echo '<h3>This website is not very secure. DO NOT Enter Real data into this site, it is a college project, and your data cannot be gauranteed to be held securely.</h3>';
+echo '<p>Only fake data is held in here, it is useless for any real purpose, and only serves to demonstrate moving a PHP application to AWS lol.</p>';
+echo 'Site Admin can be contacted at the following Email address if you made that mistake [danieljffs@gmail.com], I will delete the data if contacted.';
+echo 'Alternatively you could do this yourself by visiting the Update/Delete section from the dropdown menu.';
+
 echo '<p>Welcome to our online game store! We are passionate about bringing the best gaming experiences to our customers. Our mission is to provide a wide selection of games at competitive prices, ensuring that every gamer can find something they love.</p>';
 
 echo '<p>With over 20 years in the industry, we have built strong relationships with top game developers and publishers. This allows us to offer the latest releases as well as classic favorites. Whether you are a casual gamer or a hardcore enthusiast, we have something for everyone.</p>';

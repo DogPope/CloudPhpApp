@@ -1,0 +1,50 @@
+User-agent: *
+Disallow: /
+Yes, I can help you trace the logic flow between the files in this directory. Here's a rough outline of how the application logic flows, starting from viewUpdateDelete.php:
+
+viewUpdateDelete.php:
+
+This file displays a table of all customers retrieved from the database.
+Each row in the table has two links:
+A "Remove" link that points to delete.php with the cust_id as a query parameter.
+An "Update" link that points to updateform.php with the cust_id as a query parameter.
+delete.php:
+
+When the "Remove" link is clicked, this file is called.
+It checks if the cust_id exists in the database.
+If the customer exists, it displays their details and asks for confirmation to delete.
+If the user confirms, it submits a form to deletecustomer.php.
+deletecustomer.php:
+
+This file processes the deletion of the customer.
+It deletes the customer record from the database using the cust_id passed via POST.
+If the deletion is successful, it displays a success message and provides a link back to viewUpdateDelete.php.
+updateform.php:
+
+When the "Update" link is clicked, this file is called.
+It checks if the cust_id exists in the database.
+If the customer exists, it retrieves their details and populates variables with their data.
+It then includes updateDetails.html, which likely contains a form for updating the customer's details.
+updateDetails.html:
+
+This file is not provided, but it likely contains an HTML form for updating customer details.
+The form submits the updated data to updated.php.
+updated.php:
+
+This file processes the update of customer details.
+It validates the input fields (e.g., username, town, email, etc.).
+If all validations pass, it updates the customer record in the database.
+It then displays a success or failure message and provides a link back to viewUpdateDelete.php.
+selectupdate.php:
+
+This file is not directly linked in the flow above but seems to display a table of customers with their cust_id and forename.
+It includes whotoupdate.html, which might allow the user to select a customer to update.
+view all update delete.php:
+
+This file is very similar to viewUpdateDelete.php and displays a table of customers with "Delete" and "Update" links.
+It might serve as an alternative entry point to the same logic.
+Summary of Flow:
+The main entry point is viewUpdateDelete.php.
+From there, the user can either delete a customer (delete.php → deletecustomer.php) or update a customer (updateform.php → updateDetails.html → updated.php).
+selectupdate.php and view all update delete.php seem to provide alternative views or entry points for managing customers.
+Let me know if you'd like me to clarify any specific part of the flow or analyze a particular file in more detail!

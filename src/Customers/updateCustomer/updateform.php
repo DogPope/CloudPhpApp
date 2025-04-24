@@ -3,25 +3,20 @@ require '../../../vendor/autoload.php';
 require '../../../bootstrap.php';
 use App\Core\Database;
 include("../../../public/html/header.html");
-
-// Takes in 'cust_id' from view all update delete.php
 try{
     $db = Database::getInstance();
-    echo "Connection was Successful";
-
-    $sql="SELECT count(*) FROM customers WHERE cust_id=:cid";
-
-    $result = $db->prepare($sql);
-    $result->bindValue(':cid', $_GET['cust_id']);
-    $result->execute();
+    $cust_id = filter_input(INPUT_GET, 'cust_id', FILTER_VALIDATE_INT);
+    if (!$cust_id) {
+        throw new Exception("Invalid Customer ID provided in the URL.");
+    }
+    $sql = "SELECT count(*) FROM customers WHERE cust_id = :cid";
+    $result = $db->query($sql, [':cid' => $cust_id]);
     
     if($result->fetchColumn() > 0){
-        $sql = 'SELECT * FROM customers where cust_id = :cid';
-        $result = $db->prepare($sql);
-        $result->bindValue(':cid', $_GET['cust_id']);
-        $result->execute();
-
+        $sql = 'SELECT * FROM customers WHERE cust_id = :cid';
+        $result = $db->query($sql, [':cid' => $cust_id]);
         $row = $result->fetch();
+
         $cust_id = $row['cust_id'];
         $username = $row['username'];
         $town = $row['town'];
@@ -39,5 +34,5 @@ try{
     $output = 'Unable to connect to the database server: ' . $e->getMessage() . ' in ' . $e->getFile() . ':' . $e->getLine();
     echo $output;
 }
-include 'updateDetails.html';
+include('updatedetails.html');
 ?>

@@ -7,10 +7,9 @@ try{
     $db = Database::getInstance();
     $sql =  'update games set title = :gtitle, developer = :gdeveloper, genre = :ggenre,
                 saleprice = :gsaleprice, quantity = :gquantity, status = :gstatus WHERE game_id = :gid';
-    $result = $db->query($sql);
+    $result = $db->prepare($sql);
     $result->bindValue(':gid', $_POST['ud_id']);
 
-    // This is being triggered erroneously. Must Find cause. Title Validation triggered.
     if(strlen($_POST['ud_title']) < 1 || strlen($_POST['ud_title']) > 20){
         echo "You must enter a valid title to continue!<br>";
         echo "Click <a href='viewUpdateDelete.php'>Here</a> To return!";
@@ -51,7 +50,7 @@ In a past life, and so on and so forth.
         return;
     }
 
-    if($_POST['ud_status'] == "r" || $_POST['ud_status'] == "d"){
+    if($_POST['ud_status'] == "R" || $_POST['ud_status'] == "D" || $_POST['ud_status'] == "d" || $_POST['ud_status'] == "r"){
         $result->bindValue(':gstatus', $_POST['ud_status']);
     }else{
         echo 'You need to enter "Registered" or "Deregistered" as a status to continue!';

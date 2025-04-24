@@ -5,23 +5,28 @@ use App\Core\Database;
 try{
     include("../../../public/html/header.html");
     $db = Database::getInstance();
-    echo "Connection was Successful";
+    $cust_id = filter_input(INPUT_GET, 'cust_id', FILTER_VALIDATE_INT);
+    if (!$cust_id){
+        throw new Exception("Invalid Customer ID in URL.");
+    }
     $sql = 'SELECT count(*) FROM customers where cust_id = :cid';
-    $result = $db->prepare($sql);
-    $result->bindValue(':cid', $_GET['cust_id']);
-    $result->execute();
+    $result = $db->query($sql, [':cid' => $cust_id]);
     if($result->fetchColumn() > 0){
         $sql = 'SELECT * FROM customers where cust_id = :cid';
-        $result = $db->prepare($sql);
-        $result->bindValue(':cid', $_GET['cust_id']);
-        $result->execute();
+        $result = $db->query($sql, [':cid' => $cust_id]);
+        $row = $result->fetch();
         
-        while ($row = $result->fetch()){
-            echo $row['username'] . ' ' . $row['town'] . ' Are you sure you want to delete?' . '<form action="deleteCustomer.php" method="post">
-            <input type="hidden" name="cust_id" value="'.$row['cust_id'].'">
-            <input type="submit" value="yes delete" name="delete">
-            </form>';
-        }
+        echo "<div>";
+        echo "<h3>Delete Confirmation</h3>";
+        echo "<p>Customer: <strong>{$row['username']}</strong> by <strong>{$row['email']}</strong></p>";
+        echo "<p>Are you sure you want to delete this customer entry?</p>";
+
+        echo "<form action='deletecustomer.php' method='post'>
+              <input type='hidden' name='cust_id' value='{$row['cust_id']}'>
+              <input type='submit' value='Yes, Delete!' name='delete'>
+              <a href='viewUpdateDelete.php'>Cancel</a>
+              </form>";
+        echo "</div>";
     }else{
         print("No rows matched the query.");
     }

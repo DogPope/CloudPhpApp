@@ -76,6 +76,12 @@ class Database{
     {
         return $this->pdo;
     }
+
+    // Added prepare to match already existing methods.
+    public function prepare(string $sql): \PDOStatement
+    {
+        return $this->pdo->prepare($sql);
+    }
     
     /**
      * Execute a query and return the statement

@@ -24,9 +24,7 @@ try {
         echo '<td><a href="updateForm.php?game_id=' . $gameId . '">Update</a></td>';
         echo '</tr>';
     }
-
     echo '</table>';
-
 } catch (PDOException $e) {
     $output = 'Unable to connect to the database server: ' . $e->getMessage() . ' in ' . $e->getFile() . ':' . $e->getLine();
     echo $output;
