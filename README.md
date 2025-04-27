@@ -9,6 +9,15 @@ Unfortunately, it looks like this is an older version of the project, and doesn'
 Either an unfinished version, or I don't know how to run it. Don't know, don't particularly care.(Edit: As of 13/02/2025, I am now forced to care lmao. Just goes to show what I know lol.)
 Right, great, now we're version controlled too.
 
+## Suggestions
+* Research best practices for migrating app to cloud.
+* Look for articles and Research papaers searching for the "Strangulation design pattern".
+^ The Strangler Pattern incrementally replaces the legacy system by building a new system alongside the old one, eventually strangling the old system
+[Here is a StackOverflow Question on the Subject](https://stackoverflow.com/questions/1118804/application-strangler-pattern-experiences-thoughts)
+* API behind gateway. Make use of AWS VPC, etc. Activity on AWS.
+* Maybe deploy with Elastic Beanstalk. Activity on AWS for this. It's in Academy Cloud Foundations.
+* RDS
+
 ## Running the Project
 ### Start XAMPP
 If you have XAMPP downloaded, run the MySQL and Apache server services. If you don't have XAMPP, it can be downloaded from [Here](https://www.apachefriends.org/download.html). Copies of MySql, MariaDB and PHP can be found within the install folder for XAMPP, and do not need to be installed separately.  

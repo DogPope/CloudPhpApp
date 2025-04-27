@@ -4,8 +4,7 @@ require '../../../bootstrap.php';
 use App\Core\Database;
 
 include('../../../public/html/header.html');
-$numOfAtSymbols = 0;
-$domain = 0;
+header('Content-Type: application/json');
 if (isset($_POST['submitdetails'])) {
     try {
         $username = $_POST['username'];

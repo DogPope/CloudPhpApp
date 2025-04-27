@@ -4,6 +4,7 @@ require '../../../bootstrap.php';
 use App\Core\Database;
 include("../../../public/html/header.html");
 // This file is the Starting point from update game in the dropdown menu.
+header('Content-Type: application/json');
 try {
     $db = Database::getInstance();
     $sql = 'SELECT game_id, title, developer, saleprice, quantity FROM games';
@@ -25,7 +26,10 @@ try {
         echo '</tr>';
     }
     echo '</table>';
+    echo json_encode(['games' => $games]);
 } catch (PDOException $e) {
+    http_response_code(500);
+    echo json_encode(['error' => $e->getMessage()]);
     $output = 'Unable to connect to the database server: ' . $e->getMessage() . ' in ' . $e->getFile() . ':' . $e->getLine();
     echo $output;
 }

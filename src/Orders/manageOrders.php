@@ -1,7 +1,7 @@
 <?php
 session_start();
-require '../../../vendor/autoload.php';
-require '../../../bootstrap.php';
+require '../../vendor/autoload.php';
+require '../../bootstrap.php';
 use App\Core\Database;
 include("../../public/html/header.html");
 

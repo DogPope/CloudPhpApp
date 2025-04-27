@@ -1,17 +1,15 @@
 <?php
 session_start();
-require '../../../vendor/autoload.php';
-require '../../../bootstrap.php';
+require '../../vendor/autoload.php';
+require '../../bootstrap.php';
 use App\Core\Database;
 
 $total = 0;
-
 // Automatically boots the user back to login. NOTE: THERE IS NO DELAY IN REDIRECTION. It is instantaneous.
 if(!isset($_SESSION['isLoggedIn'])){
     header("Location: ../Login/login.php");
     exit();
 }
-
 // Removes Items from cart on individual basis. Works, so don't remove it.
 if(isset($_GET['action']) && $_GET['action'] == "remove" && isset($_GET['game_id'])) {
     foreach($_SESSION['cart'] as $key => $value) {
@@ -24,7 +22,6 @@ if(isset($_GET['action']) && $_GET['action'] == "remove" && isset($_GET['game_id
     header("Location: placeOrder.php"); // Redirect to refresh the cart
     exit();
 }
-
 // Adds item to cart.
 if(isset($_POST['addToCart'])){
     $game_id = $_GET['game_id'];
@@ -84,7 +81,6 @@ if(isset($_POST['addToCart'])){
     header("Location: placeOrder.php");
     exit();
 }
-
 // Contol block for displaying messages to the user.
 if(isset($_SESSION['cart_error'])){
     echo '<div style="color: red; text-align: center; margin: 10px 0;">' . $_SESSION['cart_error'] . '</div>';
@@ -96,14 +92,13 @@ if(isset($_SESSION['order_success'])){
     unset($_SESSION['order_success']);
 }
 include("../../public/html/header.html");
-
 try{
     $db = Database::getInstance();
 
     $sql = 'SELECT game_id, title, developer, saleprice, quantity FROM games WHERE quantity > 0 AND Status="R"';
     $result = $db->query($sql);
 
-    $getMaxId = 'SELECT MAX(order_id) + 1 FROM Orders';
+    $getMaxId = 'SELECT MAX(order_id) + 1 FROM orders';
     $max = $db->query($getMaxId);
 
     $maxOrderNumber = $max->fetch();
@@ -214,9 +209,7 @@ try{
     $output = 'Unable to connect to the database server: ' . $e->getMessage() . ' in ' . $e->getFile() . ':' . $e->getLine();
     echo $output;
 }
-
 include("../../public/html/footer.html");
 echo "</section>";
 echo "</body></html>";
-
 ?>
