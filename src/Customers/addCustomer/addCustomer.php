@@ -4,7 +4,6 @@ require '../../../bootstrap.php';
 use App\Core\Database;
 
 include('../../../public/html/header.html');
-header('Content-Type: application/json');
 if (isset($_POST['submitdetails'])) {
     try {
         $username = $_POST['username'];

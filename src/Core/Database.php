@@ -16,9 +16,7 @@ class Database{
         $this->initializeConnection();
     }
 
-    /**
-     * Get the database instance (singleton pattern)
-     */
+    // Get the database instance with the Singleton Design Pattern
     public static function getInstance(): self
     {
         if (self::$instance === null) {
@@ -27,35 +25,24 @@ class Database{
         return self::$instance;
     }
 
-    /**
-     * Initialize the database connection using AWS Secrets Manager
-     */
+    // Initialize the database connection using AWS Secrets Manager
     private function initializeConnection(): void
     {
-        // Get secrets from AWS Secrets Manager
         $client = new SecretsManagerClient([
             'version' => 'latest',
             'region' => 'eu-west-1'
         ]);
-        
         $result = $client->getSecretValue([
             'SecretId' => $_ENV["SECRET_NAME"],
         ]);
-        
         $secretData = json_decode($result['SecretString']);
-        
-        // Set connection properties
+	    // Set connection Properties
         $this->dsn = "mysql:host={$secretData->host};port={$secretData->port};dbname={$secretData->dbname};charset=utf8";
         $this->username = $secretData->username;
         $this->password = $secretData->password;
-        
-        // Create PDO connection
         $this->connect();
     }
-    
-    /**
-     * Connect to the database
-     */
+
     private function connect(): void
     {
         $this->pdo = new PDO(
@@ -69,9 +56,7 @@ class Database{
         );
     }
     
-    /**
-     * Get the PDO instance
-     */
+    // Get PDO
     public function getPdo(): PDO
     {
         return $this->pdo;
@@ -83,9 +68,7 @@ class Database{
         return $this->pdo->prepare($sql);
     }
     
-    /**
-     * Execute a query and return the statement
-     */
+    // Prepare AND Execute the statement.
     public function query(string $sql, array $params = []): \PDOStatement
     {
         $stmt = $this->pdo->prepare($sql);
@@ -93,26 +76,20 @@ class Database{
         return $stmt;
     }
     
-    /**
-     * Fetch all results from a query
-     */
+    // Fetch all results.
     public function fetchAll(string $sql, array $params = []): array
     {
         return $this->query($sql, $params)->fetchAll();
     }
     
-    /**
-     * Fetch a single row from a query
-     */
+    // Fetch a single row.
     public function fetch(string $sql, array $params = []): ?array
     {
         $result = $this->query($sql, $params)->fetch();
         return $result !== false ? $result : null;
     }
     
-    /**
-     * Insert data into a table
-     */
+    // Insert table data as array.
     public function insert(string $table, array $data): int
     {
         $columns = implode(', ', array_keys($data));

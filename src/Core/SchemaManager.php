@@ -10,27 +10,21 @@ class SchemaManager{
     public function __construct(Database $database){
         $this->db = $database;
     }
-    /**
-     * Initialize the database schema
-     */
+    
     public function initializeSchema(): void
     {
         $this->createCustomersTable();
         $this->createGamesTable();
         $this->createOrdersTable();
     }
-    /**
-     * Check if a table exists in the database
-     */
+    
     public function tableExists(string $tableName): bool
     {
         $pdo = $this->db->getPdo();
         $result = $pdo->query("SHOW TABLES LIKE '$tableName'");
         return $result->rowCount() > 0;
     }
-    /**
-     * Create the customers table if it doesn't exist
-     */
+    // Create Customers Table.
     private function createCustomersTable(): void
     {
         if (!$this->tableExists('customers')) {
@@ -53,9 +47,7 @@ class SchemaManager{
             $this->db->getPdo()->exec($sql);
         }
     }
-    /**
-     * Create the games table if it doesn't exist
-     */
+    // Games Table.
     private function createGamesTable(): void
     {
         if (!$this->tableExists('games')) {
@@ -75,9 +67,7 @@ class SchemaManager{
             $this->db->getPdo()->exec($sql);
         }
     }
-    /**
-     * Create the orders table if it doesn't exist
-     */
+    // Create Orders and Orderitems.
     private function createOrdersTable(): void
     {
         if (!$this->tableExists('orders')) {
